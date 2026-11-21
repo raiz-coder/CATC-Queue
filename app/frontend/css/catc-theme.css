@@ -1,0 +1,10 @@
+/**
+ * css/catc-theme.css
+ * Navy / light / dark palettes and status dots.
+ */
+:root{--bg:#0a1a3f;--card:#102a5c;--ink:#eaf1ff;--mute:#a9bbe0;--line:#2f5fb3;--soft:#24407a;--accent:#4da3ff;--accent-ink:#04162e;--mark:#1f4a9a}
+:root[data-theme="light"]{--bg:#fff;--card:#fff;--ink:#0a2a66;--mute:#5a6f94;--line:#1f6feb;--soft:#d6e2f5;--accent:#1f6feb;--accent-ink:#fff;--mark:#cfe2ff}
+:root[data-theme="dark"]{--bg:#000;--card:#0b0b0b;--ink:#fff;--mute:#a6a6a6;--line:#2c2c2c;--soft:#1c1c1c;--accent:#00e5ff;--accent-ink:#00131a;--mark:#003a44}
+.dot{display:inline-block;width:16px;height:16px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.st-GREEN{background:#2ecc40}.st-YELLOW{background:#ffb700}.st-RED{background:#e53935}
+input.bad, select.bad { border-color: #e53935; outline: 2px solid #e53935; outline-offset: 0; }

@@ -1,0 +1,217 @@
+/**
+ * css/components.css
+ * Reusable UI parts: buttons, forms, cards, chips, badges, dialog, avatars.
+ */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin: 14px 0 6px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 1px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  padding: 10px 16px;
+  font-weight: 600;
+}
+
+button.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+button.link {
+  border: 0;
+  background: none;
+  color: var(--accent);
+  padding: 4px;
+}
+
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.tabs button {
+  flex: 1;
+}
+
+.tabs button.on {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-weight: 600;
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+.av {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--mark);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.mute {
+  color: var(--mute);
+}
+
+.small {
+  font-size: .9rem;
+}
+
+.err {
+  color: var(--err);
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.ok {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+dialog {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--ink);
+  max-width: 440px;
+  width: calc(100% - 32px);
+  padding: 22px;
+}
+
+dialog::backdrop {
+  background: rgba(0,0,0,.5);
+}
+
+@media (max-width: 520px) {
+  .av {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+img.av {
+  object-fit: cover;
+}
+
+.big {
+  width: 96px;
+  height: 96px;
+  font-size: 2rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 600;
+  background: var(--mark);
+}
+
+.badge.confirmed {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.badge.declined {
+  background: var(--line);
+  color: var(--mute);
+}
+
+.star {
+  color: #c98a00;
+  font-weight: 600;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-weight: 400;
+  margin: 10px 0;
+}
+
+.check input {
+  width: auto;
+  margin-top: 5px;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+a.linkbtn {
+  display: inline-block;
+  padding: 10px 16px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}

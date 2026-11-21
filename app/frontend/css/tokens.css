@@ -1,0 +1,65 @@
+/**
+ * css/tokens.css
+ * Design tokens for three themes and the base element reset.
+ *   Default : original dark green (used on first visit)
+ *   Light   : white with green outlines
+ *   Dark    : black night mode
+ * The theme is chosen with <html data-theme="default | light | dark">.
+ */
+
+:root {
+  /* Default theme */
+  color-scheme: dark;
+  --bg: #0f1b17;
+  --card: #16272f;
+  --ink: #e8f1ed;
+  --mute: #9fb3aa;
+  --line: #2f6b55;
+  --soft: #2a3f38;
+  --accent: #5fcf9f;
+  --accent-ink: #06261a;
+  --mark: #6b5a12;
+  --err: #ff8a80;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top,0px);
+  padding-bottom: env(safe-area-inset-bottom,0px);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #fff;
+  --card: #fff;
+  --ink: #12261f;
+  --mute: #5a6e66;
+  --line: #1f6f54;
+  --soft: #cfdad5;
+  --accent: #1f6f54;
+  --accent-ink: #fff;
+  --mark: #ffe27a;
+  --err: #b3261e;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #000000;
+  --card: #0b0b0b;
+  --ink: #f2f2f2;
+  --mute: #a6a6a6;
+  --line: #2c2c2c;
+  --soft: #1c1c1c;
+  --accent: #5fcf9f;
+  --accent-ink: #04140d;
+  --mark: #6b5a12;
+  --err: #ff8a80;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 1rem/1.5 "Bricolage Grotesque",system-ui,sans-serif;
+}

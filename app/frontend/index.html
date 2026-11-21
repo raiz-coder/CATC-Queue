@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="CATC-Queue: find a personal professor, or become one.">
+  <title>CATC-Queue – book your missed exam</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap">
+
+  <!-- Styles (order matters: tokens first) -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/shell.css">
+  <link rel="stylesheet" href="css/accents.css">
+  <link rel="stylesheet" href="css/catc-theme.css">
+</head>
+<body>
+  <header>
+    <div class="logo">CATC<span>-Queue</span></div>
+    <nav id="mainnav" aria-label="Main"></nav>
+    <div class="row" id="nav"></div>
+  </header>
+  <div class="shell" data-sb="off">
+    <aside id="side" aria-label="My subjects" hidden></aside>
+    <main id="app"></main>
+  </div>
+  <div id="scrim"></div>
+  <dialog id="dlg"></dialog>
+
+  <!-- Scripts (order matters: each group only uses what is loaded above it) -->
+  <!-- 1. config and data -->
+    <script src="js/config/constants.js"></script>
+  <script src="js/data/seedProfessors.js"></script>
+  <script src="js/state/store.js"></script>
+  <script src="js/utils/dom.js"></script>
+  <script src="js/utils/format.js"></script>
+  <script src="js/utils/security.js"></script>
+  <script src="js/services/theme.js"></script>
+  <script src="js/services/professors.js"></script>
+  <script src="js/components/avatar.js"></script>
+  <script src="js/components/ratingLabel.js"></script>
+  <script src="js/components/subjectChips.js"></script>
+  <script src="js/components/navbar.js"></script>
+  <script src="js/components/professorCard.js"></script>
+  <script src="js/components/bookingDialog.js"></script>
+  <script src="js/pages/auth.js"></script>
+  <script src="js/pages/home.js"></script>
+  <script src="js/pages/profile.js"></script>
+  <script src="js/pages/progress.js"></script>
+  <script src="js/pages/settings.js"></script>
+  <script src="js/pages/help.js"></script>
+  <script src="js/pages/viewProfile.js"></script>
+  <script src="js/services/api.js"></script>
+  <script src="js/components/catc-helpers.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

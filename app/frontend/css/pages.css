@@ -1,0 +1,156 @@
+/**
+ * css/pages.css
+ * Page-specific styling: roles, subject grid, professor cards, stats, requests.
+ */
+
+.roles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+  gap: 14px;
+}
+
+.role {
+  text-align: left;
+  padding: 22px;
+  border-radius: 10px;
+}
+
+.role b {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.role span {
+  color: var(--mute);
+  font-weight: 400;
+}
+
+.role:hover {
+  border-color: var(--accent);
+}
+
+.subjects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
+  gap: 12px;
+}
+
+.subj {
+  text-align: left;
+  padding: 16px;
+  border-radius: 10px;
+  min-height: 92px;
+}
+
+.subj b {
+  display: block;
+  font-size: 1.05rem;
+}
+
+.subj small {
+  color: var(--mute);
+  font-weight: 400;
+}
+
+.subj.mine {
+  border-color: var(--accent);
+  box-shadow: inset 4px 0 0 var(--accent);
+}
+
+.professor {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.professor h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.price {
+  font-weight: 800;
+  font-size: 1.15rem;
+  text-align: right;
+}
+
+.req {
+  border-top: 1px solid var(--soft);
+  padding: 12px 0;
+}
+
+.req:first-child {
+  border: 0;
+}
+
+@media (max-width: 520px) {
+  .professor {
+    grid-template-columns: 44px 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .price {
+    grid-column: 2;
+    text-align: left;
+  }
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.stat b {
+  font-size: 1.8rem;
+  display: block;
+  line-height: 1.1;
+}
+
+.subj[aria-pressed="true"] {
+  border-color: var(--accent);
+  box-shadow: inset 4px 0 0 var(--accent);
+}
+
+.sec {
+  margin-bottom: 16px;
+}
+
+.sec h2 {
+  margin-top: 0;
+}
+
+.pv-head {
+  gap: 16px;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px 18px;
+  margin: 0;
+}
+
+.facts dt {
+  color: var(--mute);
+}
+
+.facts dd {
+  margin: 0;
+}
+
+@media (max-width: 520px) {
+  .facts {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .facts dd {
+    margin-bottom: 8px;
+  }
+}

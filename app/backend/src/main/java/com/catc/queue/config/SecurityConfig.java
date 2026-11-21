@@ -30,4 +30,14 @@ public class SecurityConfig {
      .httpBasic(b->b.authenticationEntryPoint((rq,rs,e)->rs.sendError(401)));
     return h.build();
   }
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/admin/**").hasRole("ADMIN")  // Critical: must be placed before general rules
+                    .anyRequest().authenticated()
+            )
+            .formLogin(Customizer.withDefaults());
+    return http.build();
+  }
 }

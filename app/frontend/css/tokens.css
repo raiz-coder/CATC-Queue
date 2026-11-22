@@ -6,7 +6,7 @@
  *   Dark    : black night mode
  * The theme is chosen with <html data-theme="default | light | dark">.
  */
-
+:root { --h: 150; --sbg: #000; --sline: #333; --sink: #fff; --sac: #4da3ff; }
 :root {
   /* Default theme */
   color-scheme: dark;

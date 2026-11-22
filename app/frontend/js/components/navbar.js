@@ -63,15 +63,14 @@ function renderNav() {
     const u = currentUser();
     const ok = u && u.role && u.done;
     $(".shell").dataset.sb = ok && u.role !== "admin" ? "on" : "off";
-    $("#nav").innerHTML = u ? `<div class="who">${ok ? `<button id="subbtn">${uiState.page === "settings" ? "Sections" : "Subjects"}</button>` : ""}<span class="mute small name">${escapeHtml(u.name)} · ${u.role || "new"}</span><button class="out" id="out">Log out</button></div>` : "";
+    $("#nav").innerHTML = u ? `<div class="who"><span class="mute small name">${escapeHtml(u.name)} · ${u.role || "new"}</span><button class="out" id="out">Log out</button></div>` : "";
     $("#mainnav").innerHTML = ok ? NAV_PAGES.map(([k, l, d]) => `<button data-p="${k}" ${uiState.page === k ? 'aria-current="page"' : ""}>${navIcon(d)}<span>${l}</span></button>`).join("") : "";
     $("#mainnav").querySelectorAll("[data-p]").forEach(b => b.onclick = () => goTo(b.dataset.p));
     if (u) {
         $("#out").onclick = logout;
     }
-    if (ok) {
-        $("#subbtn").onclick = () => document.body.classList.add("drawer");
-    }
+    $("#subbtn").style.display = ok && u.role !== "admin" ? "" : "none";
+    $("#subbtn").onclick = () => document.body.classList.add("drawer");
     renderSide();
 }
 

@@ -126,7 +126,7 @@ function renderAuthPage() {
   <div class="tabs"><button data-t="signup" class="${su ? "on" : ""}">Sign up</button><button data-t="login" class="${su ? "" : "on"}">Log in</button></div>
   ${su ? f("n", "Full name") + (pr ? f("emp", "Employee ID") + `<label for="dp">Department</label><select id="dp">${DEPTS.map(d => `<option>${d}</option>`).join("")}</select>` : f("sid", "Student ID") + f("crs", "Course and year", "BSIT-3")) : ""}
   <label for="e">${su ? "Email" : pr ? "Email or Employee ID" : "Email or Student ID"}</label><input id="e" type="${su ? "email" : "text"}" autocomplete="username">
-  <label for="p">Password</label><input id="p" type="password" autocomplete="${su ? "new-password" : "current-password"}">
+  <label for="p">Password</label><div class="pw"><input id="p" type="password" autocomplete="${su ? "new-password" : "current-password"}"><button type="button" class="eye" id="eye" aria-label="Show password" aria-pressed="false" title="Show password"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
   <div class="err" role="alert">${escapeHtml(uiState.err)}</div>
   <p><button class="primary" id="go" style="width:100%">${su ? "Create " + (pr ? "professor" : "student") + " account" : "Log in"}</button></p>
   <p class="mute small">Demo: student@catc.edu or 2024-0001 / student123 · prof@catc.edu or E-001 / prof123 · admin@catc.edu / admin123</p></div></div>`;
@@ -134,6 +134,12 @@ function renderAuthPage() {
     app.querySelectorAll("[data-t]").forEach(b => b.onclick = () => { uiState.tab = b.dataset.t; uiState.err = ""; renderAuthPage(); });
     $("#go").onclick = () => authSubmit(su, pr);
     app.querySelectorAll("input, select").forEach(i => i.oninput = () => i.classList.remove("bad"));
+    const eye = $("#eye"), pw = $("#p");
+    let locked = false;
+    const showPw = on => { pw.type = on ? "text" : "password"; eye.classList.toggle("on", on); eye.setAttribute("aria-pressed", on); eye.setAttribute("aria-label", on ? "Hide password" : "Show password"); };
+    eye.onclick = () => { locked = !locked; showPw(locked); };
+    eye.onmouseenter = () => showPw(true);
+    eye.onmouseleave = () => showPw(locked);
 }
 
 /** Show an error without re-rendering: only the wrong fields get a red outline. */

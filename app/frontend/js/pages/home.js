@@ -64,15 +64,32 @@ function renderProfessorHome() {
             : '<span class="mute">No pending requests.</span>';
         $("#results").querySelectorAll("[data-a]").forEach(b => b.onclick = () => {
             const r = DB.requests.find(x => x.id === b.dataset.r), d = $("#dlg"), a = b.dataset.a;
-            const done = s => { r.status = s; save(); d.close(); renderApp(); };
-            if (a === "cancelok") { r.status = "cancelled"; save(); return renderApp(); }
+            const when = `${r.day} at ${formatTime(r.time)}`, me = currentUser().name;
+            const finish = (status, type, msg, extra) => { Object.assign(r, extra || {}, { status }); addEvent(r, type, "student", msg); save(); d.close(); renderApp(); };
+            if (a === "cancelok") {
+                return finish("cancelled", "cancelled", `${me} approved your cancellation of ${r.subject} on ${when}.`);
+            }
+            const head = `<h2 style="margin-top:0">${a === "confirmed" ? "Confirm request" : "Decline request"}</h2><p>${escapeHtml(r.student)} (${studentLine(r)})<br>${escapeHtml(r.subject)} · ${when}${r.msg ? "<br>Message: " + escapeHtml(r.msg) : ""}</p>`;
             if (a === "confirmed") {
-                d.innerHTML = `<h2 style="margin-top:0">Confirm request</h2><p>${escapeHtml(r.student)} (${studentLine(r)})<br>${escapeHtml(r.subject)} · ${r.day} · ${formatTime(r.time)}</p><label for="cr">Type the booking reference number exactly (the student has it)</label><input id="cr" autocomplete="off"><div class="err" id="ce" role="alert"></div><div class="row" style="margin-top:14px"><button class="primary" id="cy">Confirm</button><button id="cn">Quit</button></div>`;
-                d.showModal(); $("#cn").onclick = () => d.close();
-                $("#cy").onclick = () => $("#cr").value === r.ref ? done("confirmed") : $("#ce").textContent = "Reference number does not match this booking.";
+                d.innerHTML = head + `<label for="cr">Type the student's reference number exactly</label><input id="cr" autocomplete="off">
+  <div class="grid2"><div><label for="rm">Room</label><input id="rm"></div><div><label for="cp2">Campus</label><input id="cp2"></div></div>
+  <label for="rp">Reply message</label><textarea id="rp" rows="2"></textarea>
+  <div class="err" id="ce" role="alert"></div><div class="row" style="margin-top:14px"><button class="primary" id="cy">Confirm</button><button id="cn">Quit</button></div>`;
+                d.showModal();
+                $("#cn").onclick = () => d.close();
+                $("#cy").onclick = () => {
+                    if ($("#cr").value.trim() !== r.ref) { return $("#ce").textContent = "Reference number does not match this booking."; }
+                    if (!$("#rm").value.trim() || !$("#cp2").value.trim()) { return $("#ce").textContent = "Enter the room and the campus."; }
+                    const acceptRef = answerRef(r, "A33p");
+                    finish("confirmed", "accepted", `${me} accepted your booking for ${r.subject} on ${when}. Authentication no. ${acceptRef}.`, { acceptRef, room: $("#rm").value.trim(), campus: $("#cp2").value.trim(), reply: $("#rp").value.trim() });
+                };
             } else {
-                d.innerHTML = `<h2 style="margin-top:0">Decline request</h2><p>Do you want it to be rescheduled?</p><div class="row"><button class="primary" id="dy">Yes</button><button id="dd">Decline only</button><button id="dn">Quit</button></div>`;
-                d.showModal(); $("#dn").onclick = () => d.close(); $("#dy").onclick = () => done("rescheduled"); $("#dd").onclick = () => done("declined");
+                d.innerHTML = head + `<label for="rp">Reply message</label><textarea id="rp" rows="2"></textarea><p>Do you want it to be rescheduled?</p><div class="row"><button class="primary" id="dy">Yes</button><button id="dd">Decline only</button><button id="dn">Quit</button></div>`;
+                d.showModal();
+                $("#dn").onclick = () => d.close();
+                const decline = (status, text) => finish(status, status, `${me} ${text} ${r.subject} on ${when}.`, { declineRef: answerRef(r, "D53l"), reply: $("#rp").value.trim() });
+                $("#dy").onclick = () => decline("rescheduled", "offered to reschedule your booking for");
+                $("#dd").onclick = () => decline("declined", "declined your booking for");
             }
         });
     };

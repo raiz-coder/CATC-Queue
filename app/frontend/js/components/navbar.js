@@ -34,6 +34,11 @@ function goTo(page) {
 
 function logout() {
     AUTH = null;
+    const me = currentUser();
+    if (me && !API_MODE) {
+        me.lastSeen = 0;
+        save();
+    }
     DB.session = null;
     save();
     uiState.subject = null;
@@ -60,16 +65,18 @@ function upcoming(list) {
 /** Draws the main navigation, the account area and the sidebar. */
 function renderNav() {
     renderRail();
+    renderBell();
+    touchPresence();
     const u = currentUser();
     const ok = u && u.role && u.done;
-    $(".shell").dataset.sb = ok && u.role !== "admin" ? "on" : "off";
+    $(".shell").dataset.sb = ok ? "on" : "off";
     $("#nav").innerHTML = u ? `<div class="who"><span class="mute small name">${escapeHtml(u.name)} · ${u.role || "new"}</span><button class="out" id="out">Log out</button></div>` : "";
-    $("#mainnav").innerHTML = ok ? NAV_PAGES.map(([k, l, d]) => `<button data-p="${k}" ${uiState.page === k ? 'aria-current="page"' : ""}>${navIcon(d)}<span>${l}</span></button>`).join("") : "";
+    $("#mainnav").innerHTML = ok ? (u.role === "admin" ? adminNav() : NAV_PAGES).map(([k, l, d]) => `<button data-p="${k}" ${uiState.page === k ? 'aria-current="page"' : ""}>${navIcon(d)}<span>${l}</span></button>`).join("") : "";
     $("#mainnav").querySelectorAll("[data-p]").forEach(b => b.onclick = () => goTo(b.dataset.p));
     if (u) {
         $("#out").onclick = logout;
     }
-    $("#subbtn").style.display = ok && u.role !== "admin" ? "" : "none";
+    $("#subbtn").style.display = ok ? "" : "none";
     $("#subbtn").onclick = () => document.body.classList.add("drawer");
     renderSide();
 }
@@ -78,7 +85,7 @@ function renderNav() {
 function renderSide() {
     const side = $("#side");
     const u = currentUser();
-    if (!(u && u.role && u.done) || u.role === "admin") {
+    if (!(u && u.role && u.done)) {
         side.hidden = true;
         side.innerHTML = "";
         return;
@@ -86,6 +93,9 @@ function renderSide() {
     side.hidden = false;
     if (uiState.page === "settings") {
         return renderSettingsIndex(side);
+    }
+    if (u.role === "admin") {
+        return renderAdminIndex(side);
     }
     if (uiState.page === "progress") {
         return renderScheduleIndex(side);

@@ -19,48 +19,55 @@
   <link rel="stylesheet" href="css/accents.css">
   <link rel="stylesheet" href="css/catc-theme.css">
   <link rel="stylesheet" href="css/clockCalendar.css">
+  <link rel="stylesheet" href="css/notifications.css">
+  <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-<header>
-  <button id="subbtn" aria-label="Open menu"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
-  <div class="logo">CATC<span>-Queue</span></div>
-  <nav id="mainnav" aria-label="Main"></nav>
-  <div class="row" id="nav"></div>
-</header>
-<div class="shell" data-sb="off">
-  <aside id="side" aria-label="My subjects" hidden></aside>
-  <main id="app"></main>
-  <aside id="rail" aria-label="Date and time" hidden></aside>
-</div>
-<div id="scrim"></div>
-<dialog id="dlg"></dialog>
+  <header>
+    <button id="subbtn" aria-label="Open menu"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <div class="logo">CATC<span>-Queue</span></div>
+    <nav id="mainnav" aria-label="Main"></nav>
+    <div class="row" id="nav"></div>
+    <button id="bell" class="bell" aria-label="Notifications" aria-haspopup="dialog" aria-expanded="false" style="display:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="reddot"></span></button>
+  </header>
+  <div class="shell" data-sb="off">
+    <aside id="side" aria-label="My subjects" hidden></aside>
+    <main id="app"></main>
+    <aside id="rail" aria-label="Date and time" hidden></aside>
+    <div id="notif" class="notif" role="dialog" aria-label="Notifications" hidden></div>
+  </div>
+  <div id="scrim"></div>
+  <dialog id="dlg"></dialog>
 
-<!-- Scripts (order matters: each group only uses what is loaded above it) -->
-<!-- 1. config and data -->
-<script src="js/config/constants.js"></script>
-<script src="js/data/seedProfessors.js"></script>
-<script src="js/state/store.js"></script>
-<script src="js/utils/dom.js"></script>
-<script src="js/utils/format.js"></script>
-<script src="js/utils/security.js"></script>
-<script src="js/services/theme.js"></script>
-<script src="js/services/professors.js"></script>
-<script src="js/components/avatar.js"></script>
-<script src="js/components/ratingLabel.js"></script>
-<script src="js/components/subjectChips.js"></script>
-<script src="js/components/navbar.js"></script>
-<script src="js/components/professorCard.js"></script>
-<script src="js/components/bookingDialog.js"></script>
-<script src="js/pages/auth.js"></script>
-<script src="js/pages/home.js"></script>
-<script src="js/pages/profile.js"></script>
-<script src="js/pages/progress.js"></script>
-<script src="js/pages/settings.js"></script>
-<script src="js/pages/help.js"></script>
-<script src="js/pages/viewProfile.js"></script>
-<script src="js/services/api.js"></script>
-<script src="js/components/catc-helpers.js"></script>
-<script src="js/components/clockCalendar.js"></script>
-<script src="js/app.js"></script>
+  <!-- Scripts (order matters: each group only uses what is loaded above it) -->
+  <!-- 1. config and data -->
+    <script src="js/config/constants.js"></script>
+  <script src="js/data/seedProfessors.js"></script>
+  <script src="js/state/store.js"></script>
+  <script src="js/utils/dom.js"></script>
+  <script src="js/utils/format.js"></script>
+  <script src="js/utils/security.js"></script>
+  <script src="js/services/theme.js"></script>
+  <script src="js/services/professors.js"></script>
+  <script src="js/components/avatar.js"></script>
+  <script src="js/components/ratingLabel.js"></script>
+  <script src="js/components/subjectChips.js"></script>
+  <script src="js/components/navbar.js"></script>
+  <script src="js/components/professorCard.js"></script>
+  <script src="js/components/bookingDialog.js"></script>
+  <script src="js/pages/auth.js"></script>
+  <script src="js/pages/home.js"></script>
+  <script src="js/pages/profile.js"></script>
+  <script src="js/pages/progress.js"></script>
+  <script src="js/pages/settings.js"></script>
+  <script src="js/pages/help.js"></script>
+  <script src="js/pages/viewProfile.js"></script>
+  <script src="js/services/api.js"></script>
+  <script src="js/services/references.js"></script>
+  <script src="js/components/catc-helpers.js"></script>
+  <script src="js/components/clockCalendar.js"></script>
+  <script src="js/components/notifications.js"></script>
+  <script src="js/pages/admin.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

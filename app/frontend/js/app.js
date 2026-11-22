@@ -6,7 +6,7 @@
 const PAGES = {
     student: { home: renderStudentHome, progress: renderStudentProgress },
     professor: { home: renderProfessorHome, progress: renderProfessorSchedule },
-    admin: { home: renderAdminHome, progress: renderAdminHome, profile: renderAdminHome },
+    admin: { home: renderAdminHome, progress: renderAdminTransactions },
     shared: { profile: renderProfilePage, settings: renderSettingsPage, help: renderHelpPage, view: renderViewProfilePage }
 };
 

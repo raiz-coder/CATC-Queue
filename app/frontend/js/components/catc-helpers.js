@@ -4,12 +4,6 @@
  */
 NAV_PAGES.splice(1, 0, NAV_PAGES.splice(2, 1)[0]);
 document.addEventListener("change", e => { if (e.target.id === "ss") { uiState.status = e.target.value; renderApp(); const x = $("#ss"); if (x) { x.focus(); } } });
-function newBookingRef() {
-    const A = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", d = new Date().toISOString().slice(2, 10).replace(/-/g, "");
-    let ref;
-    do { ref = "CQ-" + d + "-" + Array.from({ length: 5 }, () => A[Math.floor(Math.random() * A.length)]).join(""); } while (DB.requests.some(r => r.ref === ref));
-    return ref;
-}
 const statusLabel = s => ({ GREEN: "Available", YELLOW: "On break", RED: "Unavailable" }[s] || "Available");
 const statusBar = s => ["GREEN", "YELLOW", "RED"].map(c => `<span class="dot st-${c}" style="opacity:${c === (s || "GREEN") ? 1 : .22}" title="${statusLabel(s)}"></span>`).join("");
 const studentOf = r => DB.users.find(x => x.id === r.studentId) || {};
@@ -23,16 +17,17 @@ function calendarHtml(list) {
 }
 app.addEventListener("click", e => {
   const c = e.target.closest("[data-cx]"), s = e.target.closest("[data-st]"), f = e.target.closest("[data-sf]");
-  if (c) { const r = DB.requests.find(x => x.id === c.dataset.cx); r.status = r.status === "pending" ? "cancelled" : "cancel_requested"; save(); renderStudentProgress(); }
+  if (c) {
+    const r = DB.requests.find(x => x.id === c.dataset.cx), direct = r.status === "pending";
+    r.status = direct ? "cancelled" : "cancel_requested";
+    r.cancelRef = cancelRef(r);
+    addEvent(r, r.status, "professor", `${r.student} ${direct ? "cancelled" : "asked to cancel"} the booking for ${r.subject} on ${r.day} at ${formatTime(r.time)}.`);
+    save();
+    renderStudentProgress();
+  }
   if (s) { currentUser().status = s.dataset.st; save(); renderProfessorHome(); }
   if (f) { uiState.sf = f.dataset.sf; renderStudentProgress(); }
 });
-function renderAdminHome() {
-  app.innerHTML = `<h1>Admin</h1><h2>User accounts</h2><div class="card">${DB.users.filter(u => u.role !== "admin").map(u => `<div class="req"><b>${escapeHtml(u.name)}</b> · ${u.role || "new"} · ${escapeHtml(u.email)} ${u.sid ? "· " + escapeHtml(u.sid) : ""} <button class="link" data-du="${u.id}">Delete</button></div>`).join("") || '<span class="mute">No accounts.</span>'}</div>
-  <h2>All bookings</h2><div class="card">${DB.requests.map(r => `<div class="req">${escapeHtml(r.student)} → ${escapeHtml(r.professor)} · ${escapeHtml(r.subject)} · ${r.day} ${formatTime(r.time)} <span class="badge ${r.status}">${r.status}</span> <button class="link" data-db="${r.id}">Delete</button></div>`).join("") || '<span class="mute">No bookings.</span>'}</div>`;
-  app.querySelectorAll("[data-du]").forEach(b => b.onclick = () => { if (API_MODE) { return api("DELETE", "/api/users/" + b.dataset.du).then(pull).then(renderAdminHome); } DB.users = DB.users.filter(u => u.id !== b.dataset.du); DB.requests = DB.requests.filter(r => r.studentId !== b.dataset.du && r.professorId !== b.dataset.du); save(); renderAdminHome(); });
-  app.querySelectorAll("[data-db]").forEach(b => b.onclick = () => { if (API_MODE) { return api("DELETE", "/api/requests/" + b.dataset.db).then(pull).then(renderAdminHome); } DB.requests = DB.requests.filter(r => r.id !== b.dataset.db); save(); renderAdminHome(); });
-}
 if (!API_MODE && !DB.users.some(u => u.id === "admin")) {
   DB.users.push({ id: "admin", name: "Admin", email: "admin@catc.edu", pw: hashPassword("admin123"), role: "admin", done: true, subjects: [] },
     { id: "demo-s", name: "Juan Reyes", email: "student@catc.edu", pw: hashPassword("student123"), role: "student", done: true, subjects: ["Programming"], sid: "2024-0001", course: "BSIT-3", hours: 5 },

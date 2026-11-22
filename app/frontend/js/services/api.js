@@ -13,11 +13,30 @@ function takeSnapshot() {
     SNAP.me = JSON.stringify(currentUser() || {});
     SNAP.reqs = Object.fromEntries(DB.requests.map(r => [r.id, JSON.stringify(r)]));
 }
+/** Updates the lists in place, so pages that hold an object keep working. */
+function mergeList(list, incoming) {
+    const byId = new Map(list.map(x => [x.id, x]));
+    list.length = 0;
+    incoming.forEach(n => {
+        const o = byId.get(n.id);
+        if (o) { Object.keys(o).forEach(k => delete o[k]); Object.assign(o, n); list.push(o); } else { list.push(n); }
+    });
+}
 async function pull() {
     const d = await api("GET", "/api/data");
-    DB.users = d.users; DB.requests = d.requests; DB.session = d.me;
+    mergeList(DB.users, d.users); mergeList(DB.requests, d.requests); DB.session = d.me;
     takeSnapshot();
 }
+
+let lastBeat = 0;
+/** Tells the backend (or saves locally) that the signed-in user is online, so the admin can see it. */
+function touchPresence(force) {
+    const u = currentUser();
+    if (!u || u.role === "admin" || (!force && Date.now() - lastBeat < 25000)) { return; }
+    lastBeat = Date.now();
+    if (API_MODE) { if (AUTH) { api("POST", "/api/presence").catch(() => {}); } } else { u.lastSeen = lastBeat; save(); }
+}
+setInterval(() => touchPresence(), 30000);
 async function apiLogin(ident, pw, portal) {
     AUTH = "Basic " + btoa(ident + ":" + pw);
     try { await pull(); } catch (x) { AUTH = null; return authFail(x.message, "e", "p"); }

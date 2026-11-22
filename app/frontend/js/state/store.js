@@ -17,7 +17,8 @@ catch (e) {
 
 const save = () => {
     if (API_MODE) {
-        return syncUp();
+        void syncUp(); // errors are handled inside syncUp, so the promise is not awaited
+        return;
     }
     try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));

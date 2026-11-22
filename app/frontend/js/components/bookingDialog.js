@@ -33,7 +33,7 @@ function openBookingDialog(t) {
         if (!$("#time").value) { $("#be").textContent = "Pick an exam date with an open time."; return; }
         const ref = newBookingRef();
         DB.requests.push({
-            id: "r" + Date.now(), studentId: currentUser().id, student: currentUser().name, professorId: t.id, professor: t.name, subject: $("#bs").value, day: $("#day").value, time: $("#time").value, msg: $("#msg").value.trim(), status: "pending", ref, at: Date.now()
+            id: "r" + Date.now(), studentId: currentUser().id, student: currentUser().name, professorId: t.id, professor: t.name, subject: $("#bs").value, day: $("#day").value, time: $("#time").value, msg: $("#msg").value.trim(), status: "pending", ref, at: Date.now(), events: [{ t: "requested", to: "professor", at: Date.now(), msg: `${currentUser().name} requested ${$("#bs").value} on ${$("#day").value} at ${formatTime($("#time").value)}.` }]
         });
         save();
         d.innerHTML = `<h2 style="margin-top:0">Request sent</h2><p>Your booking reference number is <b>${ref}</b>. Give it to ${escapeHtml(t.name)}, who must type it to confirm. Track it under Schedules.</p><button class="primary" id="ok">Done</button>`;

@@ -15,19 +15,25 @@ function logActivity(u, text) {
     u.log.length = Math.min(u.log.length, 40);
 }
 
+/** The admin only gets Theme and design, and Security and privacy. */
+function settingsTabs() {
+    const u = currentUser();
+    return u && u.role === "admin" ? SETTINGS_TABS.filter(t => ["theme", "security"].includes(t[0])) : SETTINGS_TABS;
+}
+
 /** Settings page: section list on the left, one section at a time on the right. */
 function renderSettingsPage() {
     const u = currentUser();
-    const tab = SETTINGS_TABS.some(t => t[0] === uiState.settingsTab) ? uiState.settingsTab : "profile";
+    const tab = settingsTabs().some(t => t[0] === uiState.settingsTab) ? uiState.settingsTab : settingsTabs()[0][0];
     app.innerHTML = `<h1>Settings</h1><div id="panel"></div>`;
     ({ profile: profilePanel, theme: themePanel, security: securityPanel, history: historyPanel, account: accountPanel })[tab](u);
 }
 
 /** Sidebar index shown on the Settings page. */
 function renderSettingsIndex(side) {
-    const tab = SETTINGS_TABS.some(t => t[0] === uiState.settingsTab) ? uiState.settingsTab : "profile";
+    const tab = settingsTabs().some(t => t[0] === uiState.settingsTab) ? uiState.settingsTab : settingsTabs()[0][0];
     side.innerHTML = `<div class="side-head"><b>Settings</b></div>
-  <nav aria-label="Settings sections">${SETTINGS_TABS.map(([k, l]) => `<button class="sub" data-tab="${k}" ${k === tab ? 'aria-current="true"' : ""}><span class="grow">${l}</span></button>`).join("")}</nav>
+  <nav aria-label="Settings sections">${settingsTabs().map(([k, l]) => `<button class="sub" data-tab="${k}" ${k === tab ? 'aria-current="true"' : ""}><span class="grow">${l}</span></button>`).join("")}</nav>
   <div class="side-foot"><button id="sout" style="width:100%">Log out</button></div>`;
     side.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => {
         uiState.settingsTab = b.dataset.tab;

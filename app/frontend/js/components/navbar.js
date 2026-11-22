@@ -59,6 +59,7 @@ function upcoming(list) {
 
 /** Draws the main navigation, the account area and the sidebar. */
 function renderNav() {
+    renderRail();
     const u = currentUser();
     const ok = u && u.role && u.done;
     $(".shell").dataset.sb = ok && u.role !== "admin" ? "on" : "off";

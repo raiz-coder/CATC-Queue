@@ -171,21 +171,6 @@ async function authSubmit(su, pr) {
     uiState.err = ""; uiState.page = "home"; save(); renderApp();
 }
 
-/** Student or professor choice after sign-up. */
-function renderRolePage() {
-    app.innerHTML = `<h1>What brings you here?</h1><p class="lead">Pick one. You can create a separate account for the other role later.</p>
-  <div class="roles"><button class="role card" data-r="student"><b>I want to learn</b><span>Find your professor and book a make-up exam.</span></button>
-  <button class="role card" data-r="professor"><b>I am a professor</b><span>Post your availability and manage booking requests.</span></button></div>`;
-    app.querySelectorAll("[data-r]").forEach(b => b.onclick = () => {
-        const u = currentUser();
-        u.role = b.dataset.r;
-        u.done = false;
-        uiState.sel = [];
-        save();
-        renderApp();
-    });
-}
-
 /** First-time setup: subjects and basics. */
 function renderOnboardingPage() {
     const u = currentUser();
@@ -201,13 +186,8 @@ function renderOnboardingPage() {
   <div><label for="exp">Experience</label><input id="exp" value="${escapeHtml(u.exp || "")}" placeholder="e.g. 3 yrs"></div></div>` :
         `<div class="grid2"><div><label for="sid">Student ID</label><input id="sid" value="${escapeHtml(u.sid || "")}"></div><div><label for="crs">Course and year</label><input id="crs" value="${escapeHtml(u.course || "")}" placeholder="BSIT-3"></div></div>`}
   <div class="err" role="alert">${escapeHtml(uiState.err)}</div>
-  <p><button class="primary" id="fin">Continue to dashboard</button> <button class="link" id="back">Change role</button></p></div>`;
+  <p><button class="primary" id="fin">Continue to dashboard</button></p></div>`;
     bindChipToggles(uiState.sel);
-    $("#back").onclick = () => {
-        u.role = null;
-        save();
-        renderApp();
-    };
     $("#fin").onclick = () => {
         if (!uiState.sel.length) {
             uiState.err = "Choose at least one subject.";

@@ -17,9 +17,6 @@ function renderApp() {
     if (!user) {
         return renderAuthPage();
     }
-    if (!user.role) {
-        return renderRolePage();
-    }
     if (!user.done) {
         return renderOnboardingPage();
     }

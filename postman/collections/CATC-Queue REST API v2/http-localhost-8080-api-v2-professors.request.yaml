@@ -1,0 +1,8 @@
+$kind: http-request
+name: http://localhost:8080/api/v2/professors
+description: ""
+url: http://localhost:8080/api/v2/professors
+method: GET
+auth:
+  type: noauth
+order: 1000

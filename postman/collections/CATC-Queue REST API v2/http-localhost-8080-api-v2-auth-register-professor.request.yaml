@@ -1,0 +1,11 @@
+$kind: http-request
+name: http://localhost:8080/api/v2/auth/register/professor
+description: 'Generated from cURL: curl -X POST http://localhost:8080/api/v2/auth/register/professor -H "Content-Type: application/json" -d "{\"employeeId\":\"EMP-100\",\"name\":\"Prof. Maria Santos\",\"email\":\"maria@catc.edu\",\"department\":\"IT\",\"reference\":\"PR-100\",\"password\":\"password123\"}"'
+url: http://localhost:8080/api/v2/auth/register/professor
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"employeeId":"EMP-100","name":"Prof. Maria Santos","email":"maria@catc.edu","department":"IT","reference":"PR-100","password":"password123"}'
+order: 3000

@@ -1,0 +1,13 @@
+$kind: http-request
+name: http://localhost:8080/api/v2/professor/bookings
+description: 'Generated from cURL: curl -u "maria@catc.edu:password123" "http://localhost:8080/api/v2/professor/bookings?view=PENDING"'
+url: http://localhost:8080/api/v2/professor/bookings?view=PENDING
+method: GET
+queryParams:
+  view: PENDING
+auth:
+  type: basic
+  credentials:
+    username: maria@catc.edu
+    password: password123
+order: 5000

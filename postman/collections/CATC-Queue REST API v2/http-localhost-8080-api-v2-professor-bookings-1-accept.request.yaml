@@ -1,0 +1,16 @@
+$kind: http-request
+name: http://localhost:8080/api/v2/professor/bookings/1/accept
+description: 'Generated from cURL: curl -u "maria@catc.edu:password123" -X POST http://localhost:8080/api/v2/professor/bookings/1/accept -H "Content-Type: application/json" -d "{\"referenceReq\":\"MALI-123\",\"subject\":\"Programming 2\",\"examDate\":\"2026-12-10\",\"examTime\":\"09:00:00\",\"studentName\":\"Juan Dela Cruz\",\"studentId\":\"2024-0001\"}"'
+url: http://localhost:8080/api/v2/professor/bookings/1/accept
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"referenceReq":"MALI-123","subject":"Programming 2","examDate":"2026-12-10","examTime":"09:00:00","studentName":"Juan Dela Cruz","studentId":"2024-0001"}'
+auth:
+  type: basic
+  credentials:
+    username: maria@catc.edu
+    password: password123
+order: 6000

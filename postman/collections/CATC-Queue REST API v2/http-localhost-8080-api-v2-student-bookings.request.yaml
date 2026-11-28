@@ -1,0 +1,16 @@
+$kind: http-request
+name: http://localhost:8080/api/v2/student/bookings
+description: 'Generated from cURL: curl -u "juan@catc.edu:password123" -X POST http://localhost:8080/api/v2/student/bookings -H "Content-Type: application/json" -d "{\"professorId\":1,\"subject\":\"Programming 2\",\"examDate\":\"2026-12-10\",\"examTime\":\"09:00:00\",\"message\":\"I was sick during the midterm.\"}"'
+url: http://localhost:8080/api/v2/student/bookings
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"professorId":1,"subject":"Programming 2","examDate":"2026-12-10","examTime":"09:00:00","message":"I was sick during the midterm."}'
+auth:
+  type: basic
+  credentials:
+    username: juan@catc.edu
+    password: password123
+order: 4000

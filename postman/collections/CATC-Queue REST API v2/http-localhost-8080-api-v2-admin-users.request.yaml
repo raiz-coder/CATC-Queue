@@ -1,0 +1,11 @@
+$kind: http-request
+name: http://localhost:8080/api/v2/admin/users
+description: ""
+url: http://localhost:8080/api/v2/admin/users
+method: GET
+auth:
+  type: basic
+  credentials:
+    username: admin@catc.local
+    password: ChangeMe123!
+order: 2000
